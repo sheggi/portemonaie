@@ -14,7 +14,7 @@
                 Filtered ({{query}}) and Ordered ({{orderProp}})                
                 <table class="table">
                     <tr ng-repeat="money in moneys | filter:query | orderBy:orderProp" class="{{$first?'first':''}} {{$even?'even':'odd'}} {{$last?'last':''}}">
-                        <td class="text-center"><a href="#/portemonaie/{{money.id}}">({{money.id}})</a></td>
+                        <td class="text-center"><a href="#/portemonaie/{{money.id}}" class="btn btn-info">{{money.id}}</a></td>
                         <td>[{{money.date | date:'yyyy-MM-dd HH:mm:ss'}}]</td>
                         <td>Bestand/&Auml;nderung</td>
                         <td class="text-right">{{money.value | valuta}}</td>
