@@ -1,37 +1,15 @@
-p {
-    font-style: italic;
-}
-
-ul {
-    margin: 0;
-    padding: 0;
-}
-
-ul .even {
-    background-color: #a9ffa9;
-}
-
-ul .odd {
-    background-color: #b9ffff;
-}
-
-
-ul .first {
-    background-color: #ffbaff;
-}
-
-ul .last {
-    background-color: #ffd3f5;
-}
-
-ul li{
-    list-style: none;
-}
-
-ul li a{
-    text-align: center;
-}
 
 span.valuta {
     text-align: right;
+}
+
+div.container-fluid {
+    margin: 0.5em;
+    padding: 0.5em;
+    background-color: #fff;
+}
+
+body {
+    padding: 1em;
+    background-color: #eaeaea;
 }
