@@ -1,0 +1,25 @@
+<div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span3">
+                <!--Sidebar content-->
+                Search function: <input ng-model="query">
+                Sort by: <select ng-model="orderProp"> 
+                    <option value="value">Wert</option>
+                    <option value="date">Neustes</option>
+                    <option value="-date">Aeltestes</option>
+                </select>
+            </div>
+            <div class="span6">
+                <!--Body content-->
+                Filtered ({{query}}) and Ordered ({{orderProp}})                
+                <table class="table">
+                    <tr ng-repeat="money in moneys | filter:query | orderBy:orderProp" class="{{$first?'first':''}} {{$even?'even':'odd'}} {{$last?'last':''}}">
+                        <td class="text-center"><a href="#/portemonaie/{{money.id}}">({{money.id}})</a></td>
+                        <td>[{{money.date | date:'yyyy-MM-dd HH:mm:ss'}}]</td>
+                        <td>Bestand/&Auml;nderung</td>
+                        <td class="text-right">{{money.value | valuta}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
