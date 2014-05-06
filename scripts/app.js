@@ -4,6 +4,7 @@
  * freigewählter Name für die Aplikation ist 'App'
  */
 var App = angular.module('App', [
+    'ui.bootstrap',
     'ngRoute',
     'AppControllers',
     'moneyFilters'

@@ -4,20 +4,23 @@
     <meta charset="utf-8">
     <title>My HTML File</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
-    <link rel="stylesheet" href="styles/app.css">
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="extern/angular.min.js"></script>
+    <script src="extern/angular-route.min.js"></script>
+    <script src="extern/angular-mocks.js"></script>
+    <script src="extern/ui-bootstrap.min.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/controllers.js"></script>
     <script src="scripts/filters/valuta.js"></script>
+    <link rel="stylesheet" href="extern/bootstrap.min.css">
+    <link rel="stylesheet" href="extern/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="styles/app.css">
 </head>
 <body>
     <div class="container">
         <div class="page-header">
             <h1>Portemonaie <small>your online checklist</small></h1>
         </div>
+        <?php echo "try to work php without brackets"; ?>
         <span>Angular Core {{'works!'}}</span>
         <div ng-view>Body!</div>
         <h3>more about</h3>
