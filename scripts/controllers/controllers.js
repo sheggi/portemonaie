@@ -37,3 +37,8 @@ AppControllers.controller('MoneyDetailCtrl', ['$scope', '$routeParams',
             alert('Hello ' + (name || 'world') +'!');
         };
 }]);
+
+AppControllers.controller('ChangeCtrl', ['$scope', 
+    function ($scope, $routeParams) {
+        $scope.formModus = "Einnahme";
+}]);
