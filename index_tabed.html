@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="de" ng-app="App">
+<head>
+    <meta charset="utf-8">
+    <title>My HTML File</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="extern/bootstrap.min.css">
+    <link rel="stylesheet" href="extern/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="styles/app.css">
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Portemonaie <small>your online checklist</small></h1>
+        </div>
+        <span>Angular Core {{'works!'}}</span>
+        <?php echo "php work ;)"; ?>
+        <div ng-controller="TabsetCtrl">
+        <tabset>
+            <tab heading="Overview">
+                <div ng-include="'views/overview.html'" ng-controller="MoneyListCtrl">
+                    Overview...
+                </div>
+            </tab> 
+            <tab heading="Overview">
+                <div ng-include="'views/change.html'" ng-controller="ChangeCtrl">
+                    Change...
+                </div>
+            </tab><!--
+            <tab heading="Overview" ng-include="'views/detail.html'" ng-controller="MoneyDetailCtrl">
+                <div>
+                    Detail...
+                </div>
+            </tab>-->
+        </tabset>
+        </div>
+        <h3>more about</h3>
+        <p>
+            pakl blaskdjg asldkj lsdafsdfasdfas
+            dfasdfasdfklj asdfkj asdlöfk asöldkfasdfasd
+            fasdfasdfasdfasdfasdfasdfasdfasd klasdjf aslk
+        </p>
+    </div>
+    
+    
+    
+    <script src="extern/angular.min.js"></script>
+    <script src="extern/angular-route.min.js"></script>
+    <script src="extern/angular-mocks.js"></script>
+    <script src="extern/ui-bootstrap-tpls.min.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/controllers.js"></script>
+    <script src="scripts/filters/valuta.js"></script>
+</body>
+</html>

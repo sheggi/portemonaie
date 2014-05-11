@@ -39,6 +39,10 @@ AppControllers.controller('MoneyDetailCtrl', ['$scope', '$routeParams',
 }]);
 
 AppControllers.controller('ChangeCtrl', ['$scope', 
-    function ($scope, $routeParams) {
+    function ($scope) {
         $scope.formModus = "Einnahme";
+}]);
+
+AppControllers.controller('TabsetCtrl', ['$scope', 
+    function ($scope) {
 }]);
