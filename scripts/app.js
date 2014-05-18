@@ -14,7 +14,7 @@ App.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.
             when('/', {
-                templateUrl: 'views/overview.html',
+                templateUrl: 'views/home.html',
                 controller: 'MoneyCtrl'
             }).
             when('/money', {

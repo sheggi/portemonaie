@@ -1,5 +1,5 @@
-<h3>Money &Uuml;bersicht</h3>
+<h1>Money &Uuml;bersicht</h1>
 <ul class="nav nav-tabs nav-justified">
-	<li ng-repeat="pane in panes"><a class="{{pane.active?'active':''}}" ng-click="loadPane(pane.src)">{{pane.title}}</a></li>
+	<li ng-repeat="pane in panes" class="{{pane.active?'active':''}}"><a ng-click="loadPane(pane.src)">{{pane.title}}</a></li>
 </ul>
-<div ng-include="paneInclude"></div>
+<div ng-include="paneURL"></div>

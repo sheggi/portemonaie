@@ -5,8 +5,44 @@
  */
 var AppControllers = angular.module('AppControllers',[]);
 
+AppControllers.controller( 'NavbarCtrl', ['$scope', '$location',
+	function ($scope, $location) {
+        
+    $scope.subApps = [
+        {title:"Home", path:"/"},
+        {title:"Portemonaie", path:"/money"}
+    ];
+        
+    $scope.isCollapsed = true;
+    $scope.$on('$routeChangeSuccess', function () {
+        $scope.isCollapsed = true;
+    });
+        
+    $scope.getClass = function (path) {
+        if(path === '/') {
+            if($location.path() === '/') {
+                return "active";
+            } else {
+                return "";
+            }
+        }
+
+        if ($location.path().substr(0, path.length) === path) {
+            return "active";
+        } else {
+            return "";
+        }
+    }
+}]);
+
 AppControllers.controller( 'MoneyCtrl', ['$scope', '$http', '$routeParams',
 	function ($scope, $http, $routeParams) {
+        
+	$scope.panes = [
+		{title:"Übersicht", src:"views/money.list.html", active:true},
+		{title:"Change", src:"views/money.change.html"}
+	];
+        
  	$http.get('scripts/services/data.json').success(function (data) {
 		$scope.moneys = data;
 		$scope.moneys.date = Date.parse($scope.moneys.date);
@@ -15,60 +51,18 @@ AppControllers.controller( 'MoneyCtrl', ['$scope', '$http', '$routeParams',
     $scope.query = '';
 
 	$scope.moneyId = $routeParams.moneyId;
-	$scope.hello = function (name) {
-		 alert('Hello ' + (name || 'world') +'!');
-      };
+    $scope.hello = function (name) {
+        alert('Hello ' + (name || 'world') +'!');
+    };
       
-      $scope.formModus = "Einnahme";
+    $scope.formModus = "Einnahme";
         	
-	$scope.panes = [
-		{title:"Übersicht", src="views/overview.html"},
-		{title:"Change", src="views/change.html"}
-	];
-	$scope.includePane = "views/overveiw.html";
 	$scope.loadPane = function(src) {
-		$scope.includePane = src;
-	}
-}]);
-
-AppControllers.controller( 'MoneyListCtrl', ['$scope', '$http',
-  function ($scope, $http) {
-    $http.get('scripts/services/data.json').success(function (data) {
-        /*$.each(data, function () {
-            var obj = this;
-            this.date = Date.parse(this.date);
-            console.log(obj);
-        });*/
-        $scope.moneys = data;
-        $scope.moneys.date = Date.parse($scope.moneys.date);
-    });
-    /*
-    $scope.moneys = [
-        {'date': '12.03.2001', 'value': 100},
-        {'date': '14.03.2001', 'value': 1000},
-        {'date': '12.05.2001', 'value': 3440},
-        {'date': '12.03.2005', 'value': 2309},
-        {'date': '12.03.2006', 'value': 830},
-        {'date': '12.03.2014', 'value': 100}
-    ];
-    */
-    $scope.orderProp = '-date';
-    $scope.query = '';
-}]);
-
-AppControllers.controller('MoneyDetailCtrl', ['$scope', '$routeParams',
-    function ($scope, $routeParams) {
-        $scope.moneyId = $routeParams.moneyId;
-        $scope.hello = function (name) {
-            alert('Hello ' + (name || 'world') +'!');
-        };
-}]);
-
-AppControllers.controller('ChangeCtrl', ['$scope', 
-    function ($scope) {
-        
-}]);
-
-AppControllers.controller('TabsetCtrl', ['$scope', 
-    function ($scope) {
+        var i;
+        for(i = 0; i < $scope.panes.length; ++i){
+            $scope.panes[i].active = ($scope.panes[i].src == src);
+        }
+		$scope.paneURL = src;
+	} 
+    $scope.paneURL = $scope.panes[0].src;
 }]);
