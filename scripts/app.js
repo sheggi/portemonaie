@@ -13,20 +13,20 @@ var App = angular.module('App', [
 App.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.
-            when('/portemonaie', {
+            when('/', {
                 templateUrl: 'views/overview.html',
-                controller: 'MoneyListCtrl'
+                controller: 'MoneyCtrl'
             }).
-            when('/portemonaie/:moneyId', {
-                templateUrl: 'views/detail.html',
-                controller: 'MoneyDetailCtrl'
+            when('/money', {
+                templateUrl: 'views/money.html',
+                controller: 'MoneyCtrl'
             }).
-            when('/change', {
-                templateUrl: 'views/change.html',
-                controller: 'ChangeCtrl'
+            when('/money/:category/:Id ', {
+                templateUrl: 'views/money.html',
+                controller: 'MoneyCtrl'
             }).
             otherwise({
-                redirectTo: '/portemonaie'
+                redirectTo: '/'
             });
     }]);
         
