@@ -1,0 +1,59 @@
+<h3>&Auml;nderungen</h3>
+<div class="container-fluid">
+    <form  class="form-horizontal" role="form">
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Art der &Auml;nderung</label>
+            <div class="col-sm-8 btn-group">
+                <label class="btn btn-default" ng-model="formModus" btn-radio="'Einnahme'">Einnahme</label>
+                <label class="btn btn-default" ng-model="formModus" btn-radio="'Ausgabe'">Ausgabe</label>
+                <label class="btn btn-default" ng-model="formModus" btn-radio="'Ubertrag'">&Uuml;bertrag</label>
+                <label class="btn btn-default" ng-model="formModus" btn-radio="'Ist'">Ist Zustand</label>
+            </div> {{radioResult}}
+        </div>
+        <hr>
+        <div  class="form-group">
+            <label class="col-sm-4 control-label">Konto</label>
+            <div  class="col-sm-8">
+                <select class="form-control input-lg">
+                    <option>Konto 1</option>
+                    <option>Konto 2</option>
+                    <option>Konto 3</option>
+                    <option>Konto 4</option>
+                </select>    
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Vermerk</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control input-lg" id="inputVermerk" placeholder="{{(formModus=='Ist')?'Ist Wert':'Was genau...'}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Betrag</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <input type="text" class="form-control input-lg" id="inputEmail3" placeholder="Betrag 100.50">
+                    <span class="input-group-addon">CHFr.</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Datum und Zeit</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control input-lg" id="inputDatum" placeholder="Datum und Zeit">
+            </div>
+        </div>
+        <div  class="form-group" ng-show="formModus=='Ubertrag'">
+            <label class="col-sm-4 control-label">Ziel Konto</label>
+            <div  class="col-sm-8">
+                <select class="form-control input-lg">
+                    <option>Konto 1</option>
+                    <option>Konto 2</option>
+                    <option>Konto 3</option>
+                    <option>Konto 4</option>
+                </select>    
+            </div>
+        </div>
+        
+    </form>
+</div>
