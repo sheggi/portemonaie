@@ -10,7 +10,8 @@ AppControllers.controller( 'NavbarCtrl', ['$scope', '$location',
         
     $scope.subApps = [
         {title:"Home", path:"/"},
-        {title:"Portemonaie", path:"/money"}
+        {title:"Portemonaie", path:"/money"} ,
+	   {title:"Test", path:"/test"}
     ];
         
     $scope.isCollapsed = true;
@@ -35,8 +36,10 @@ AppControllers.controller( 'NavbarCtrl', ['$scope', '$location',
     }
 }]);
 
-AppControllers.controller( 'MoneyCtrl', ['$scope', '$http', '$routeParams',
-	function ($scope, $http, $routeParams) {
+AppControllers.controller( 'MoneyCtrl', ['$scope', '$http', '$routeParams', '$filter', 
+	function ($scope, $http, $routeParams, $filter) {
+        
+        var rawMoneyList = null;
         
 	$scope.panes = [
 		{title:"Übersicht", src:"views/money.list.html", active:true},
@@ -45,6 +48,7 @@ AppControllers.controller( 'MoneyCtrl', ['$scope', '$http', '$routeParams',
         
  	$http.get('scripts/services/data.json').success(function (data) {
 		$scope.moneys = data;
+		rawMoneyList = data;
 		$scope.moneys.date = Date.parse($scope.moneys.date);
 	});
 	$scope.orderProp = '-date';
@@ -65,4 +69,35 @@ AppControllers.controller( 'MoneyCtrl', ['$scope', '$http', '$routeParams',
 		$scope.paneURL = src;
 	} 
     $scope.paneURL = $scope.panes[0].src;
+    
+    
+    // ---------- TEST SECTION ----------
+    
+    var indexedTeams = [];
+    
+    $scope.playersToFilter = function() {
+        indexedTeams = [];
+        return $scope.moneys;
+    }
+    
+    $scope.filterTeams = function(player) {
+        // var date = $filter('date')(player.date,'yyyyMM');
+        var teamIsNew = indexedTeams.indexOf(player.date) == -1;
+        if (teamIsNew) {
+            indexedTeams.push(player.date);
+        }
+        return teamIsNew;
+    }
+   
+    var _moneyByMonth;
+    $scope.moneyByMonth = function (rawMoneys) {
+    		_moneyByMonth = [];
+    		for(var i = 0; i < rawMoneys.length ;i++){
+    			_moneyByMonth[ ($filter('date')(rawMoneys[i].date,'yyyyMM'))   ]  =  rawMoneys[i] ; ////FIXXXX
+    		}
+    		//return _moneyByMonth;
+    		return [_moneyByMonth];
+    }
+    
+        
 }]);

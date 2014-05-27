@@ -25,6 +25,10 @@ App.config(['$routeProvider',
                 templateUrl: 'views/money.html',
                 controller: 'MoneyCtrl'
             }).
+            when('/test', {
+            	templateUrl: 'views/money.list.test.html',
+            	controller: 'MoneyCtrl'
+            }).
             otherwise({
                 redirectTo: '/'
             });
