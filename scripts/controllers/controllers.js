@@ -47,6 +47,7 @@ AppControllers.controller( 'MoneyCtrl', ['$scope', '$http', '$routeParams', '$fi
 	];
         
  	$http.get('scripts/services/data.json').success(function (data) {
+        console.log(data);
 		$scope.moneys = data;
 		rawMoneyList = data;
 		$scope.moneys.date = Date.parse($scope.moneys.date);
@@ -93,10 +94,12 @@ AppControllers.controller( 'MoneyCtrl', ['$scope', '$http', '$routeParams', '$fi
     $scope.moneyByMonth = function (rawMoneys) {
     		_moneyByMonth = [];
     		for(var i = 0; i < rawMoneys.length ;i++){
-    			_moneyByMonth[ ($filter('date')(rawMoneys[i].date,'yyyyMM'))   ]  =  rawMoneys[i] ; ////FIXXXX
+                var yearmonth = $filter('date')(rawMoneys[i].date,'yyyyMMdd') + "";
+                _moneyByMonth[_moneyByMonth.length] = {'yearmonth': yearmonth, 'entry' : rawMoneys[i]};
+    			//_moneyByMonth[ ($filter('date')(rawMoneys[i].date,'yyyyMM'))   ]  =  rawMoneys[i] ; ////FIXXXX
     		}
     		//return _moneyByMonth;
-    		return [_moneyByMonth];
+    		return _moneyByMonth;
     }
     
         
