@@ -39,7 +39,6 @@ AppControllers.controller( 'NavbarCtrl', ['$scope', '$location',
 AppControllers.controller( 'MoneyCtrl', ['$scope', '$http', '$routeParams', '$filter', 
 	function ($scope, $http, $routeParams, $filter) {
         
-        var rawMoneyList = null;
         
 	$scope.panes = [
 		{title:"Übersicht", src:"views/money.list.html", active:true},
@@ -47,9 +46,7 @@ AppControllers.controller( 'MoneyCtrl', ['$scope', '$http', '$routeParams', '$fi
 	];
         
  	$http.get('scripts/services/data.json').success(function (data) {
-        console.log(data);
 		$scope.moneys = data;
-		rawMoneyList = data;
 		$scope.moneys.date = Date.parse($scope.moneys.date);
 	});
 	$scope.orderProp = '-date';
@@ -57,7 +54,7 @@ AppControllers.controller( 'MoneyCtrl', ['$scope', '$http', '$routeParams', '$fi
 
 	$scope.moneyId = $routeParams.moneyId;
     $scope.hello = function (name) {
-        alert('Hello ' + (name || 'world') +'!');
+        alert('FIXXXXXXX');
     };
       
     $scope.formModus = "Einnahme";
@@ -74,29 +71,13 @@ AppControllers.controller( 'MoneyCtrl', ['$scope', '$http', '$routeParams', '$fi
     
     // ---------- TEST SECTION ----------
     
-    var indexedTeams = [];
-    
-    $scope.playersToFilter = function() {
-        indexedTeams = [];
-        return $scope.moneys;
-    }
-    
-    $scope.filterTeams = function(player) {
-        // var date = $filter('date')(player.date,'yyyyMM');
-        var teamIsNew = indexedTeams.indexOf(player.date) == -1;
-        if (teamIsNew) {
-            indexedTeams.push(player.date);
-        }
-        return teamIsNew;
-    }
-   
-    var _moneyByMonth;
+    var _moneyByMonth = [];
     $scope.moneyByMonth = function (rawMoneys) {
-    		_moneyByMonth = [];
+            _moneyByMonth = [];
     		for(var i = 0; i < rawMoneys.length ;i++){
-                var yearmonth = $filter('date')(rawMoneys[i].date,'yyyyMMdd') + "";
+                var yearmonth = $filter('date')(rawMoneys[i].date,'yyyyMM') + "";
                 _moneyByMonth[_moneyByMonth.length] = {'yearmonth': yearmonth, 'entry' : rawMoneys[i]};
-    			//_moneyByMonth[ ($filter('date')(rawMoneys[i].date,'yyyyMM'))   ]  =  rawMoneys[i] ; ////FIXXXX
+                
     		}
     		//return _moneyByMonth;
     		return _moneyByMonth;
