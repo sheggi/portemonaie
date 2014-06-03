@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="de" ng-app="App">
+<head>
+    <meta charset="utf-8">
+    <title>Probe Seite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../extern/angular.min.js"></script>
+    <script src="../extern/angular-route.min.js"></script>
+    <script src="../extern/angular-mocks.js"></script>
+    <script src="../extern/ui-bootstrap-tpls.min.js"></script>
+    <link rel="stylesheet" href="../extern/bootstrap.min.css">
+    <link rel="stylesheet" href="../extern/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../styles/app.css">
+</head>
+<body>
+<div class="container">
+	<h1>Neste ng-repeat</h1>
+	<div ng-controller="probeCtrl">
+		<p>
+			{{yes}}
+		</p>
+		<hr>
+		<h2>nested Array</h2>
+		<ul ng-repeat="month in listMonths">
+			<li>{{month.name}}</li>
+			<ul ng-repeat="day in month.days">
+				<li>{{day.day}}</li>
+			</ul>
+		</ul>
+		<hr>
+		<h2>flat Array to nested Array</h2>
+		<ul ng-repeat="month in byMonth()">
+			<li>{{month.name}}</li>
+			<ul ng-repeat="day in month.days">
+				<li>{{day.day}}</li>
+			</ul>
+		</ul>
+<pre>
+FIXXX flat array as parameter to function
+FIXXX check if flat array is new, otherwise return old nestled arry (improve performance)
+</pre>
+		<hr>
+        	<p>
+        		{{'Angular JS works!'}}
+        	</p>
+    	</div>
+ </div>
+<script>
+console.log('==== START SCRIPTSECTION =====');
+
+var App = angular.module('App', [
+    'ui.bootstrap'
+]);
+
+
+App.controller('probeCtrl', 
+function ($scope) {
+	
+	$scope.yes = "yes you can!";
+	
+	//----- START Nestet Array 	SECTION -----
+	$scope.listMonths = [
+		{
+			name: 'Juni',
+			days : [
+				{ day : 1},
+				{ day : 2},
+				{ day : 3},
+				{ day : 4}
+			]
+		},
+		{ 
+			name: 'Juli',
+			days : [
+				{ day : 5},
+				{ day : 6},
+				{ day : 7},
+				{ day : 8}
+			]
+		},
+		{
+			name: 'August',
+			days : [
+				{ day : 9},
+				{ day : 10},
+				{ day : 11},
+				{ day : 12}
+			]
+		}
+	];
+	//----- END Nestet Array 	SECTION -----
+	
+	//----- START Flat Array SECTION -----
+	var flatArray = [
+		{ month : 1, day : 1},
+		{ month : 1, day : 2},
+		{ month : 1, day : 3},
+		{ month : 1, day : 4},
+		{ month : 2, day : 5},
+		{ month : 2, day : 6},
+		{ month : 2, day : 7},
+		{ month : 2, day : 8},
+		{ month : 3, day : 9},
+		{ month : 3, day : 10},
+		{ month : 3, day : 11},
+		{ month : 3, day : 12}
+	];
+	var flatMonth = {
+		1 : 'Juni',
+		2 : 'Juli',
+		3 : 'August'
+	};
+	
+	$scope.byMonth = function() { // FIXXXXXX flat Array as parameter
+		//FIXXXXXXXX only do if Array changed... else return old construct
+		var nestedArray = [];
+		var indexedMonth = [];
+		
+		for(var i = 0; i < flatArray.length; i++){
+			if( indexedMonth.indexOf( flatArray[i].month ) == -1 ) { 
+				indexedMonth[indexedMonth.length] = flatArray[i].month;
+				nestedArray[ nestedArray.length ] = { name : flatMonth[ flatArray[i].month ], days : [] };
+			}
+			nestedArray[ indexedMonth.indexOf( flatArray[i].month ) ].days.push( {day : flatArray[i].day} );
+			console.log( "<" + i  + "> [" + flatArray[i].month + "] (" + flatArray[i].day + ") " + nestedArray[ indexedMonth.indexOf( flatArray[i].month )  ].name + ": " + nestedArray[ indexedMonth.indexOf( flatArray[i].month ) ].days );
+			 //console.log( "<" + i  + "> [" + flatArray[i].month + "] (" + flatArray[i].day + ") " + nestedArray[ indexedMonth.indexOf( flatArray[i].month )  ].name);
+		}
+		
+		return nestedArray;
+	};
+	 //----- START Flat Array SECTION -----
+});
+
+
+console.log('==== END SCRIPTSECTION =====');
+</script>
+
+</body>
+</html>
