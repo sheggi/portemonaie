@@ -3,15 +3,23 @@
 /**
  * Kontroller für Money Liste
  */
-var AppControllers = angular.module('AppControllers',[]);
+var AppControllers = angular.module('AppControllers', []);
 
-AppControllers.controller( 'NavbarCtrl', ['$scope', '$location',
-	function ($scope, $location) {
+AppControllers.controller('NavbarCtrl', ['$scope', '$location', function ($scope, $location) {
         
     $scope.subApps = [
-        {title:"Home", path:"/"},
-        {title:"Portemonaie", path:"/money"} ,
-	   {title:"Test", path:"/test"}
+        {
+            title: "Home",
+            path: "/"
+        },
+        {
+            title: "Portemonaie",
+            path: "/money"
+        },
+        {
+            title: "Test",
+            path: "/test"
+        }
     ];
         
     $scope.isCollapsed = true;
@@ -20,8 +28,8 @@ AppControllers.controller( 'NavbarCtrl', ['$scope', '$location',
     });
         
     $scope.getClass = function (path) {
-        if(path === '/') {
-            if($location.path() === '/') {
+        if (path === '/') {
+            if ($location.path() === '/') {
                 return "active";
             } else {
                 return "";
@@ -33,19 +41,24 @@ AppControllers.controller( 'NavbarCtrl', ['$scope', '$location',
         } else {
             return "";
         }
-    }
+    };
 }]);
 
-AppControllers.controller( 'MoneyCtrl', ['$scope', '$http', '$routeParams', '$filter', 
-	function ($scope, $http, $routeParams, $filter) {
-        
-        
+AppControllers.controller('MoneyCtrl', ['$scope', '$http', '$routeParams', '$filter', function ($scope, $http, $routeParams, $filter) {
+    
 	$scope.panes = [
-		{title:"Übersicht", src:"views/money.list.html", active:true},
-		{title:"Change", src:"views/money.change.html"}
+		{
+            title: "Übersicht",
+            src: "views/money.list.html",
+            active: true
+        },
+		{
+            title: "Change",
+            src: "views/money.change.html"
+        }
 	];
         
- 	$http.get('scripts/services/data.json').success(function (data) {
+    $http.get('scripts/services/data.json').success(function (data) {
 		$scope.moneys = data;
 		$scope.moneys.date = Date.parse($scope.moneys.date);
 	});
@@ -59,29 +72,31 @@ AppControllers.controller( 'MoneyCtrl', ['$scope', '$http', '$routeParams', '$fi
       
     $scope.formModus = "Einnahme";
         	
-	$scope.loadPane = function(src) {
+	$scope.loadPane = function (src) {
         var i;
-        for(i = 0; i < $scope.panes.length; ++i){
-            $scope.panes[i].active = ($scope.panes[i].src == src);
+        for (i = 0; i < $scope.panes.length; ++i) {
+            $scope.panes[i].active = ($scope.panes[i].src === src);
         }
 		$scope.paneURL = src;
-	} 
-    $scope.paneURL = $scope.panes[0].src;
-    
+	};
     
     // ---------- TEST SECTION ----------
-    
-    var _moneyByMonth = [];
-    $scope.moneyByMonth = function (rawMoneys) {
-            _moneyByMonth = [];
-    		for(var i = 0; i < rawMoneys.length ;i++){
-                var yearmonth = $filter('date')(rawMoneys[i].date,'yyyyMM') + "";
-                _moneyByMonth[_moneyByMonth.length] = {'yearmonth': yearmonth, 'entry' : rawMoneys[i]};
-                
-    		}
-    		//return _moneyByMonth;
-    		return _moneyByMonth;
-    }
-    
+
+    $scope.paneURL = $scope.panes[0].src;
         
+    $scope.byMonth = function (flatArray) {
+		//FIXXXXXXXX only do if Array changed... else return old construct
+		var nestedArray = [], indexedMonth = [], yearmonth = "", i;
+		
+		for (i = 0; i < flatArray.length; i++) {
+            yearmonth = $filter('date')(flatArray[i].date, 'yyyyMM') + "";
+			if (indexedMonth.indexOf(yearmonth) === -1) {
+				indexedMonth[indexedMonth.length] = yearmonth;
+				nestedArray[nestedArray.length] = { name: $filter('date')(flatArray[i].date, 'MMMM'), entrys: [] };
+			}
+			nestedArray[indexedMonth.indexOf(yearmonth)].entrys.push(flatArray[i]);
+		}
+		
+		return nestedArray;
+	};
 }]);

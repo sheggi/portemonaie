@@ -1,29 +1,27 @@
 <h3>&Uuml;bersicht von {{account.name}}</h3>
 <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="span3">
-                <!--Sidebar content-->
-                Search function: <input ng-model="query">
-                Sort by: <select ng-model="orderProp"> 
-                    <option value="value">Wert</option>
-                    <option value="date">Neustes</option>
-                    <option value="-date">Aeltestes</option>
-                </select>
-            </div>
-            <div class="span6">
-                
-                
-                
+    <div class="row-fluid">
+        <div class="span3">
+            <!--Sidebar content-->
+            Search function: <input ng-model="query">
+            Sort by: <select ng-model="orderProp"> 
+                <option value="value">Wert</option>
+                <option value="date">Neustes</option>
+                <option value="-date">Aeltestes</option>
+            </select>
+        </div>
+        <div class="span6">
+            <div ng-repeat="month in byMonth(moneys) | filter:query">
+                <h4>{{month.name}}</h4>
                 <table class="table">
-                    <tr ng-repeat="money in moneyByMonth(moneys)  | orderBy: 'yearmonth' | groupBy: 'yearmonth'  | filter:query " class="{{$first?'first':''}} {{$even?'even':'odd'}} {{$last?'last':''}}">
-                        <th ng-show="money.yearmonth_CHANGED">{{money.entry.date | date:'yyyy MMM'}}</th>
-                        <td ng-hide="money.yearmonth_CHANGED">{{money.entry.date | date:'yyyy MMM'}}</td>
-                        <td class="text-center"><a href="#/detail/{{money.entry.id}}" class="btn btn-info">{{money.entry.id}}</a></td>
-                        <td>[{{money.entry.date | date:'yyyy-MM-dd HH:mm:ss'}}]</td>
+                    <tr ng-repeat="entry in month.entrys  | orderBy: orderProp | filter:query ">
+                        <td class="text-center"><a href="#/detail/{{entry.id}}" class="btn btn-info">{{entry.id}}</a></td>
+                        <td>[{{entry.date | date:'yyyy-MM-dd HH:mm:ss'}}]</td>
                         <td>Bestand/&Auml;nderung</td>
-                        <td class="text-right">{{money.entry.value | valuta}}</td>
+                        <td class="text-right">{{entry.value | valuta}}</td>
                     </tr>
                 </table>
             </div>
         </div>
+    </div>
 </div>
