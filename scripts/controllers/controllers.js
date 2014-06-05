@@ -61,6 +61,7 @@ AppControllers.controller('MoneyCtrl', ['$scope', '$http', '$routeParams', '$fil
     $http.get('scripts/services/data.json').success(function (data) {
 		$scope.moneys = data;
 		$scope.moneys.date = Date.parse($scope.moneys.date);
+        $scope.hMoneys = {name: "Full List", entrys: data, getSum: entryGroupSumm};
 	});
 	$scope.orderProp = '-date';
     $scope.query = '';
@@ -84,19 +85,34 @@ AppControllers.controller('MoneyCtrl', ['$scope', '$http', '$routeParams', '$fil
 
     $scope.paneURL = $scope.panes[0].src;
         
+    var entryGroupSumm = function () {
+        var ens = this.entrys, i, sum = 0;
+        if (ens == null) { return 0; }
+        for (i = 0; i < ens.length; i++) {
+            if (!isNaN(ens[i].value)) {
+                sum += ens[i].value;
+            }
+            
+        }
+        return sum;
+    };
+    
+    
     $scope.byMonth = function (flatArray) {
 		//FIXXXXXXXX only do if Array changed... else return old construct
 		var nestedArray = [], indexedMonth = [], yearmonth = "", i;
-		
+		if (flatArray == null) { return nestedArray; }
 		for (i = 0; i < flatArray.length; i++) {
             yearmonth = $filter('date')(flatArray[i].date, 'yyyyMM') + "";
 			if (indexedMonth.indexOf(yearmonth) === -1) {
 				indexedMonth[indexedMonth.length] = yearmonth;
-				nestedArray[nestedArray.length] = { name: $filter('date')(flatArray[i].date, 'MMMM'), entrys: [] };
+				nestedArray[nestedArray.length] = { name: $filter('date')(flatArray[i].date, 'MMMM'), entrys: [], getSum: entryGroupSumm };
 			}
 			nestedArray[indexedMonth.indexOf(yearmonth)].entrys.push(flatArray[i]);
 		}
 		
 		return nestedArray;
 	};
+    
+    
 }]);

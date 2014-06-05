@@ -11,17 +11,31 @@
             </select>
         </div>
         <div class="span6">
-            <div ng-repeat="month in byMonth(moneys) | filter:query">
-                <h4>{{month.name}}</h4>
-                <table class="table">
-                    <tr ng-repeat="entry in month.entrys  | orderBy: orderProp | filter:query ">
-                        <td class="text-center"><a href="#/detail/{{entry.id}}" class="btn btn-info">{{entry.id}}</a></td>
-                        <td>[{{entry.date | date:'yyyy-MM-dd HH:mm:ss'}}]</td>
-                        <td>Bestand/&Auml;nderung</td>
-                        <td class="text-right">{{entry.value | valuta}}</td>
+            
+            <h4>Schluss Total</h4>
+            <u>{{hMoneys.getSum()}}</u>
+            <br>
+            <table class="table" ng-repeat="month in byMonth(moneys) | filter:query">
+                    <tr>
+                        <th colspan="2"><i>{{month.name}}</i></th>
+                        <th>Betreff</th>
+                        <th>Einnahme</th>
+                        <th>Ausgabe</th>
                     </tr>
-                </table>
-            </div>
+                
+                    <tr ng-repeat="entry in month.entrys  | orderBy: orderProp | filter:query ">
+                        <td class="text-center"><a href="#/detail/{{entry.id}}" class="btn btn-info" ng-click="hello()">{{entry.id}}</a></td>
+                        <td class="text-right">{{entry.date | date:'dd.MM.yyyy'}}<br>{{entry.date | date:'HH:mm:ss'}}</td>
+                        <td>Bestand/&Auml;nderung</td>
+                        <td class="text-right">{{((entry.value>=0)?entry.value:"") | valuta}}</td>
+                        <td class="text-right">{{((entry.value>=0)?"":-entry.value) | valuta}}</td>
+                    </tr>
+                
+                    <tr>
+                        <th colspan="4">Total</th>
+                        <td class="text-right"><u>{{month.getSum() | valuta}}</u></td>
+                    </tr>
+            </table>
         </div>
     </div>
 </div>
